@@ -8,6 +8,13 @@ public class Pen {
     private Color color;
     private String brandName;
 
+    public Pen(double price, Type type, Color color, String brandName) {
+        this.price = price;
+        this.type = type;
+        this.color = color;
+        this.brandName = brandName;
+    }
+
     public Type getType() {
         return type;
     }
