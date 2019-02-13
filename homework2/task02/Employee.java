@@ -7,6 +7,12 @@ public class Employee implements Comparable<Employee>{
     private String lastName;
     private Department department;
 
+    public Employee(String firstName, String lastName, Department department) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.department = department;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -26,5 +32,13 @@ public class Employee implements Comparable<Employee>{
     public int compareTo(Employee emp) {
         int lastCmp = lastName.compareTo(emp.lastName);
         return (lastCmp != 0 ? lastCmp : firstName.compareTo(emp.firstName));
+    }
+
+    @Override
+    public String toString() {
+        return "Employee: " +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", department=" + department;
     }
 }

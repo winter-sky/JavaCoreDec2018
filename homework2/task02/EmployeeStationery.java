@@ -1,33 +1,19 @@
 package homework2.task02;
 
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EmployeeStationery {
-    Map<Employee, Stationery> empStationery = new TreeMap<Employee, Stationery>();
+    public List<Stationery> employeeStationery = new ArrayList<Stationery>();
 
-    public void createEmployeeStationery() {
-        this.chooseStationeryType();
+    public void addStationery(double price, String brand, StationeryType type) {
+        Stationery stationery = new Stationery(price, brand, type);
+        employeeStationery.add(stationery);
     }
 
-    public void chooseStationeryType() {
-        int i = 1;
-        for (StationeryType type : StationeryType.values()) {
-            System.out.println("Enter " + i + " to add " + type.toString());
-            i++;
-        }
-    }
-
-    public void addStationery() {
-
-    }
-
-    public void deleteStationery() {
-
-    }
-
-    public static void main(String[] args) {
-        EmployeeStationery employeeStationery = new EmployeeStationery();
-        employeeStationery.createEmployeeStationery();
+    @Override
+    public String toString() {
+        return "Employee stationery: " +
+                employeeStationery;
     }
 }
