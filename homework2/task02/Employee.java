@@ -10,16 +10,6 @@ public class Employee implements Comparable<Employee>{
     private String lastName;
     private Department department=UNDEFINED;
 
-    public Employee(){
-
-    }
-
-    public Employee(String firstName, String lastName, Department department) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.department = department;
-    }
-
     public int getId() {
         return id;
     }
@@ -48,11 +38,8 @@ public class Employee implements Comparable<Employee>{
         return department;
     }
 
-    public void setDepartment(int id) {
-        for(Department d:Department.values()){
-            if (id==d.ordinal()+1)
-                department=d;
-        }
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     @Override
