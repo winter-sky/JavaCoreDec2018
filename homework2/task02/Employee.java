@@ -3,6 +3,7 @@ package homework2.task02;
 import java.util.Objects;
 
 public class Employee implements Comparable<Employee>{
+    private int id;
     private String firstName;
     private String lastName;
     private Department department;
@@ -13,19 +14,28 @@ public class Employee implements Comparable<Employee>{
         this.department = department;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return firstName.equals(employee.firstName) &&
+        return id == employee.id &&
+                firstName.equals(employee.firstName) &&
                 lastName.equals(employee.lastName) &&
                 department == employee.department;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, department);
+        return Objects.hash(id, firstName, lastName, department);
     }
 
     @Override

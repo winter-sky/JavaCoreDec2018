@@ -1,7 +1,8 @@
 package homework2.task02;
 
-import java.util.Collection;
-import java.util.Collections;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -11,6 +12,20 @@ import static homework2.task02.StationeryType.PEN;
 
 public class AccountingEmployeeStationery {
     TreeMap<Employee, EmployeeStationery> empStationery = new TreeMap<Employee, EmployeeStationery>();
+
+    public void showEmployeeStationery() throws IOException {
+        this.showEmployees();
+        System.out.println("Enter employee's id");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String r = reader.readLine();
+            for(Map.Entry entrySet:empStationery.entrySet()){
+                Employee e = (Employee) entrySet.getKey();
+                if(r.equals(Integer.toString(e.getId()))){
+                    System.out.println(entrySet.getValue());
+                }
+            }
+
+    }
 
     public void showEmployees(){
         int i =1;
@@ -22,7 +37,8 @@ public class AccountingEmployeeStationery {
 
 
     public static void main(String[] args) {
-        Employee employee = new Employee("Kirill", "Knize", IT);
+        Employee employee = new Employee("Kirill", "Romanov", IT);
+        employee.setId(1);
         EmployeeStationery employeeStationery = new EmployeeStationery();
         employeeStationery.addStationery(300,"SomeBrand", PEN);
         employeeStationery.addStationery(60,"SomeBrand",StationeryType.NOTEBOOK);
@@ -46,6 +62,11 @@ public class AccountingEmployeeStationery {
 //            System.out.println(e.employeeStationery);
 //        }
 
-        accountingEmployeeStationery.showEmployees();
+//        accountingEmployeeStationery.showEmployees();
+        try {
+            accountingEmployeeStationery.showEmployeeStationery();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
