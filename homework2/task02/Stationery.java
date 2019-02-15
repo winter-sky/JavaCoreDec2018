@@ -5,4 +5,5 @@ public class Stationery {
     protected String brand;
     protected String category;//TODO replace with enum
 
+
 }

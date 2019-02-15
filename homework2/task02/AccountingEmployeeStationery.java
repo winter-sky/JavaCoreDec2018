@@ -34,15 +34,15 @@ public class AccountingEmployeeStationery {
                     newEmployeeStationery = this.createStationery(Integer.parseInt(r));
                     break;
                 case "2":
-                    System.out.println("pressed 2");
+                    newEmployeeStationery=this.createStationery(Integer.parseInt(r));
                     break;
                 case "3":
                     System.out.println("pressed 3");
                     break;
-                    default:
-                        System.out.println("Something goes wrong");
+                default:
+                    System.out.println("Something goes wrong");
             }
-            employeeStationeryMap.put(newEmployee,newEmployeeStationery);
+            employeeStationeryMap.put(newEmployee, newEmployeeStationery);
         } else {
             this.showEmployees();
         }
@@ -51,10 +51,10 @@ public class AccountingEmployeeStationery {
             Employee employee = (Employee) entry.getKey();
             employee.setId(i);
             i++;
-            System.out.println(employee + " id " + employee.getId()+"\n");
+            System.out.println(employee + " id " + employee.getId() + "\n");
             EmployeeStationery employeeStationery = (EmployeeStationery) entry.getValue();
-            for(Stationery stationery:employeeStationery.employeeStationery) {
-                System.out.println(stationery.brand+" "+stationery.price+" "+stationery.category);
+            for (Stationery stationery : employeeStationery.employeeStationery) {
+                System.out.println(stationery.brand + " " + stationery.price + " " + stationery.category);
             }
         }
     }
@@ -62,18 +62,33 @@ public class AccountingEmployeeStationery {
     public EmployeeStationery createStationery(int i) throws IOException {
         EmployeeStationery employeeStationery = new EmployeeStationery();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        if(i==1){
-            DocumentHolder documentHolder = new DocumentHolder();
-            System.out.println("Enter the color");//TODO changed for enums
-            documentHolder.setColor(reader.readLine());
-            System.out.println("Enter the price");
-            documentHolder.setPrice( Double.parseDouble(reader.readLine()));
-            System.out.println("Enter the Brand");
-            documentHolder.setBrand(reader.readLine());
-            System.out.println("Enter the category");//TODO changed for enums
-            documentHolder.setCategory(reader.readLine());
-            employeeStationery.employeeStationery.add(documentHolder);
+        switch (i) {
+            case 1:
+                DocumentHolder documentHolder = new DocumentHolder();
+                System.out.println("Enter the color");//TODO changed for enums
+                documentHolder.setColor(reader.readLine());
+                System.out.println("Enter the price");
+                documentHolder.setPrice(Double.parseDouble(reader.readLine()));
+                System.out.println("Enter the Brand");
+                documentHolder.setBrand(reader.readLine());
+                System.out.println("Enter the category");//TODO changed for enums
+                documentHolder.setCategory(reader.readLine());
+                employeeStationery.employeeStationery.add(documentHolder);
+                break;
+            case 2:
+                Marker marker = new Marker();
+                System.out.println("Choose color:");
+                int j =1;
+                for (Color color : Color.values()) {
+                    System.out.println("enter "+ j+ " to choose "+color.toString());
+                    j++;
+                }
+                break;
+            default:
+                System.out.println("Something goes wrong");
+
         }
+
         //TODO creating other stationery
         return employeeStationery;
     }
