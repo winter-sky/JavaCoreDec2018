@@ -7,11 +7,10 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class AccountingEmployeeStationery {
-    TreeMap<Employee, EmployeeStationery> empStationery = new TreeMap<Employee, EmployeeStationery>();
+    TreeMap<Employee, EmployeeStationery> employeeStationeryMap = new TreeMap<Employee, EmployeeStationery>();
 
     public void createAccounting() throws IOException {
-        boolean flag = true;
-        while (flag) {
+        if (employeeStationeryMap.isEmpty()) {
             Employee newEmployee = new Employee();
             System.out.println("Enter first name of employee");
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -24,24 +23,55 @@ public class AccountingEmployeeStationery {
             System.out.println("Enter id of department");
             newEmployee.setDepartment(Department.extract(Integer.parseInt(reader.readLine())));
 
-            empStationery.put(newEmployee, null);
+            System.out.println("Enter 1 to add document holder");
+            System.out.println("Enter 2 to add marker");
+            System.out.println("Enter 3 to add office paper");
 
-            System.out.println("Enter 1 to add new employee");
-            System.out.println("Enter 0 to finish adding");
+            EmployeeStationery newEmployeeStationery = new EmployeeStationery();
+            String r = reader.readLine();
+            switch (r) {
+                case "1":
+                    DocumentHolder documentHolder = new DocumentHolder();
+                    System.out.println("Enter the color");
+                    documentHolder.setColor(reader.readLine());
+                    System.out.println("Enter the price");
+                    documentHolder.setPrice( Double.parseDouble(reader.readLine()));
+                    System.out.println("Enter the Brand");
+                    documentHolder.setBrand(reader.readLine());
+                    System.out.println("Enter the category");
+                    documentHolder.setCategory(reader.readLine());
 
-            if (Integer.parseInt(reader.readLine()) == 1) {
-                continue;
-            } else {
-                flag = false;
+                    newEmployeeStationery.employeeStationery.add(documentHolder);
+                    break;
+                case "2":
+                    System.out.println("pressed 2");
+                    break;
+                case "3":
+                    System.out.println("pressed 3");
+                    break;
+                    default:
+                        System.out.println("Something goes wrong");
             }
+            employeeStationeryMap.put(newEmployee,newEmployeeStationery);
+        } else {
+            this.showEmployees();
         }
-
         int i = 1;
-        for (Map.Entry entry : empStationery.entrySet()) {
+        for (Map.Entry entry : employeeStationeryMap.entrySet()) {
             Employee employee = (Employee) entry.getKey();
             employee.setId(i);
             i++;
-            System.out.println(employee+" id " + employee.getId());
+            System.out.println(employee + " id " + employee.getId()+"\n");
+            EmployeeStationery employeeStationery = (EmployeeStationery) entry.getValue();
+            for(Stationery stationery:employeeStationery.employeeStationery) {
+                System.out.println(stationery.brand+" "+stationery.price+" "+stationery.category);
+            }
+        }
+    }
+
+    public void addStationery(int i){
+        if(i==1){
+            //TODO
         }
     }
 
@@ -50,7 +80,7 @@ public class AccountingEmployeeStationery {
         System.out.println("Enter employee's id");
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String r = reader.readLine();
-        for (Map.Entry entrySet : empStationery.entrySet()) {
+        for (Map.Entry entrySet : employeeStationeryMap.entrySet()) {
             Employee e = (Employee) entrySet.getKey();
             if (r.equals(Integer.toString(e.getId()))) {
                 System.out.println(entrySet.getValue());
@@ -61,7 +91,7 @@ public class AccountingEmployeeStationery {
 
     public void showEmployees() {
         int i = 1;
-        for (Map.Entry entry : empStationery.entrySet()) {
+        for (Map.Entry entry : employeeStationeryMap.entrySet()) {
             System.out.println(i + ") " + entry.getKey().toString() + "\n");
             i++;
         }
