@@ -31,17 +31,7 @@ public class AccountingEmployeeStationery {
             String r = reader.readLine();
             switch (r) {
                 case "1":
-                    DocumentHolder documentHolder = new DocumentHolder();
-                    System.out.println("Enter the color");
-                    documentHolder.setColor(reader.readLine());
-                    System.out.println("Enter the price");
-                    documentHolder.setPrice( Double.parseDouble(reader.readLine()));
-                    System.out.println("Enter the Brand");
-                    documentHolder.setBrand(reader.readLine());
-                    System.out.println("Enter the category");
-                    documentHolder.setCategory(reader.readLine());
-
-                    newEmployeeStationery.employeeStationery.add(documentHolder);
+                    newEmployeeStationery = this.createStationery(Integer.parseInt(r));
                     break;
                 case "2":
                     System.out.println("pressed 2");
@@ -69,10 +59,23 @@ public class AccountingEmployeeStationery {
         }
     }
 
-    public void addStationery(int i){
+    public EmployeeStationery createStationery(int i) throws IOException {
+        EmployeeStationery employeeStationery = new EmployeeStationery();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         if(i==1){
-            //TODO
+            DocumentHolder documentHolder = new DocumentHolder();
+            System.out.println("Enter the color");//TODO changed for enums
+            documentHolder.setColor(reader.readLine());
+            System.out.println("Enter the price");
+            documentHolder.setPrice( Double.parseDouble(reader.readLine()));
+            System.out.println("Enter the Brand");
+            documentHolder.setBrand(reader.readLine());
+            System.out.println("Enter the category");//TODO changed for enums
+            documentHolder.setCategory(reader.readLine());
+            employeeStationery.employeeStationery.add(documentHolder);
         }
+        //TODO creating other stationery
+        return employeeStationery;
     }
 
     public void showEmployeeStationery() throws IOException {
@@ -86,7 +89,6 @@ public class AccountingEmployeeStationery {
                 System.out.println(entrySet.getValue());
             }
         }
-
     }
 
     public void showEmployees() {
