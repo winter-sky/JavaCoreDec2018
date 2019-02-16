@@ -66,9 +66,9 @@ public class AccountingEmployeeStationery {
             case 1:
                 DocumentHolder documentHolder = new DocumentHolder();
                 System.out.println("Choose the color");
-                int n=1;
-                for(Color color:Color.values()){
-                    System.out.println("Enter "+n+" to choose "+color);
+                int n = 1;
+                for (Color color : Color.values()) {
+                    System.out.println("Enter " + n + " to choose " + color);
                     n++;
                 }
                 documentHolder.setColor(Color.extractColor(Integer.parseInt(reader.readLine())));
@@ -77,9 +77,9 @@ public class AccountingEmployeeStationery {
                 System.out.println("Enter the brand");
                 documentHolder.setBrand(reader.readLine());
                 System.out.println("Choose the category");
-                int m=1;
-                for(StationeryCategory stationeryCategory:StationeryCategory.values()){
-                    System.out.println("Enter "+m+" to choose "+stationeryCategory);
+                int m = 1;
+                for (StationeryCategory stationeryCategory : StationeryCategory.values()) {
+                    System.out.println("Enter " + m + " to choose " + stationeryCategory);
                     m++;
                 }
                 documentHolder.setCategory(StationeryCategory.extractStationeryCategory(Integer.parseInt(reader.readLine())));
@@ -99,9 +99,9 @@ public class AccountingEmployeeStationery {
                 System.out.println("Enter the brand");
                 marker.setBrand(reader.readLine());
                 System.out.println("Choose category");
-                int k=1;
-                for(StationeryCategory stationeryCategory:StationeryCategory.values()){
-                    System.out.println("Enter "+k+" to choose "+stationeryCategory.toString());
+                int k = 1;
+                for (StationeryCategory stationeryCategory : StationeryCategory.values()) {
+                    System.out.println("Enter " + k + " to choose " + stationeryCategory.toString());
                     k++;
                 }
                 marker.setCategory(StationeryCategory.extractStationeryCategory(Integer.parseInt(reader.readLine())));
