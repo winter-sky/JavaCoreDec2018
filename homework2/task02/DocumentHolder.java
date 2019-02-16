@@ -1,13 +1,13 @@
 package homework2.task02;
 
 public class DocumentHolder extends Stationery {
-    String color;//TODO replace with enum
+    Color color;
 
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(Color color) {
         this.color = color;
     }
 
@@ -27,11 +27,11 @@ public class DocumentHolder extends Stationery {
         this.brand = brand;
     }
 
-    public String getCategory() {
+    public StationeryCategory getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(StationeryCategory category) {
         this.category = category;
     }
     //TODO override toString method

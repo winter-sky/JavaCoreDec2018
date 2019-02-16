@@ -27,11 +27,11 @@ public class Marker extends Stationery {
         this.brand = brand;
     }
 
-    public String getCategory() {
+    public StationeryCategory getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(StationeryCategory category) {
         this.category = category;
     }
 }

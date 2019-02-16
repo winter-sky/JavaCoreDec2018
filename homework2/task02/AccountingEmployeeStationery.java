@@ -34,7 +34,7 @@ public class AccountingEmployeeStationery {
                     newEmployeeStationery = this.createStationery(Integer.parseInt(r));
                     break;
                 case "2":
-                    newEmployeeStationery=this.createStationery(Integer.parseInt(r));
+                    newEmployeeStationery = this.createStationery(Integer.parseInt(r));
                     break;
                 case "3":
                     System.out.println("pressed 3");
@@ -65,31 +65,52 @@ public class AccountingEmployeeStationery {
         switch (i) {
             case 1:
                 DocumentHolder documentHolder = new DocumentHolder();
-                System.out.println("Enter the color");//TODO changed for enums
-                documentHolder.setColor(reader.readLine());
+                System.out.println("Choose the color");
+                int n=1;
+                for(Color color:Color.values()){
+                    System.out.println("Enter "+n+" to choose "+color);
+                    n++;
+                }
+                documentHolder.setColor(Color.extractColor(Integer.parseInt(reader.readLine())));
                 System.out.println("Enter the price");
                 documentHolder.setPrice(Double.parseDouble(reader.readLine()));
-                System.out.println("Enter the Brand");
+                System.out.println("Enter the brand");
                 documentHolder.setBrand(reader.readLine());
-                System.out.println("Enter the category");//TODO changed for enums
-                documentHolder.setCategory(reader.readLine());
+                System.out.println("Choose the category");
+                int m=1;
+                for(StationeryCategory stationeryCategory:StationeryCategory.values()){
+                    System.out.println("Enter "+m+" to choose "+stationeryCategory);
+                    m++;
+                }
+                documentHolder.setCategory(StationeryCategory.extractStationeryCategory(Integer.parseInt(reader.readLine())));
                 employeeStationery.employeeStationery.add(documentHolder);
                 break;
             case 2:
                 Marker marker = new Marker();
-                System.out.println("Choose color:");
-                int j =1;
+                System.out.println("Choose marker color");
+                int j = 1;
                 for (Color color : Color.values()) {
-                    System.out.println("enter "+ j+ " to choose "+color.toString());
+                    System.out.println("enter " + j + " to choose " + color.toString());
                     j++;
                 }
+                marker.setColor(Color.extractColor(Integer.parseInt(reader.readLine())));
+                System.out.println("Enter the price");
+                marker.setPrice(Double.parseDouble(reader.readLine()));
+                System.out.println("Enter the brand");
+                marker.setBrand(reader.readLine());
+                System.out.println("Choose category");
+                int k=1;
+                for(StationeryCategory stationeryCategory:StationeryCategory.values()){
+                    System.out.println("Enter "+k+" to choose "+stationeryCategory.toString());
+                    k++;
+                }
+                marker.setCategory(StationeryCategory.extractStationeryCategory(Integer.parseInt(reader.readLine())));
+                employeeStationery.employeeStationery.add(marker);
                 break;
             default:
                 System.out.println("Something goes wrong");
 
         }
-
-        //TODO creating other stationery
         return employeeStationery;
     }
 
