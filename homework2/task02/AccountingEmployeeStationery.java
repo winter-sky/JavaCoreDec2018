@@ -3,6 +3,8 @@ package homework2.task02;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -10,8 +12,7 @@ import java.util.TreeMap;
  * The general class for creating and managing of accounting employee stationery.
  */
 public class AccountingEmployeeStationery {
-    TreeMap<Employee, EmployeeStationery> employeeStationeryMap = new TreeMap<Employee, EmployeeStationery>();
-
+    TreeMap<Employee, List<Stationery>> employeeStationeryMap = new TreeMap<Employee, List<Stationery>>();
     /**
      * Method of creating and managing of accounting employee stationery
      *
@@ -35,22 +36,22 @@ public class AccountingEmployeeStationery {
             System.out.println("Enter 2 to add marker");
             System.out.println("Enter 3 to add office paper");
 
-            EmployeeStationery newEmployeeStationery = new EmployeeStationery();
+            List<Stationery> employeeStationery = new ArrayList<Stationery>();
             String r = reader.readLine();
             switch (r) {
                 case "1":
-                    newEmployeeStationery = this.createStationery(Integer.parseInt(r));
+                    employeeStationery = this.createStationery(Integer.parseInt(r));
                     break;
                 case "2":
-                    newEmployeeStationery = this.createStationery(Integer.parseInt(r));
+                    employeeStationery = this.createStationery(Integer.parseInt(r));
                     break;
                 case "3":
-                    newEmployeeStationery = this.createStationery(Integer.parseInt(r));
+                    employeeStationery = this.createStationery(Integer.parseInt(r));
                     break;
                 default:
                     System.out.println("Something goes wrong");
             }
-            employeeStationeryMap.put(newEmployee, newEmployeeStationery);
+            employeeStationeryMap.put(newEmployee, employeeStationery);
         }
         int i = 1;
         for (Map.Entry entry : employeeStationeryMap.entrySet()) {
@@ -58,8 +59,8 @@ public class AccountingEmployeeStationery {
             employee.setId(i);
             i++;
             System.out.println(employee + " id " + employee.getId() + "\n");
-            EmployeeStationery employeeStationery = (EmployeeStationery) entry.getValue();
-            for (Stationery stationery : employeeStationery.employeeStationery) {
+            List employeeStationery = (List) entry.getValue();
+            for (Object stationery : employeeStationery) {
                 System.out.println(stationery.toString());
             }
         }
@@ -73,8 +74,8 @@ public class AccountingEmployeeStationery {
      * @return
      * @throws IOException
      */
-    private EmployeeStationery createStationery(int i) throws IOException {
-        EmployeeStationery employeeStationery = new EmployeeStationery();
+    private List createStationery(int i) throws IOException {
+        List<Stationery> employeeStationery = new ArrayList<Stationery>();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         int j = 1;
         switch (i) {
@@ -97,7 +98,7 @@ public class AccountingEmployeeStationery {
                     j++;
                 }
                 documentHolder.setCategory(StationeryCategory.extractStationeryCategory(Integer.parseInt(reader.readLine())));
-                employeeStationery.employeeStationery.add(documentHolder);
+                employeeStationery.add(documentHolder);
                 break;
             case 2:
                 Marker marker = new Marker();
@@ -118,7 +119,7 @@ public class AccountingEmployeeStationery {
                     j++;
                 }
                 marker.setCategory(StationeryCategory.extractStationeryCategory(Integer.parseInt(reader.readLine())));
-                employeeStationery.employeeStationery.add(marker);
+                employeeStationery.add(marker);
                 break;
             case 3:
                 OfficePaper officePaper = new OfficePaper();
@@ -141,7 +142,7 @@ public class AccountingEmployeeStationery {
                     j++;
                 }
                 officePaper.setCategory(StationeryCategory.extractStationeryCategory(Integer.parseInt(reader.readLine())));
-                employeeStationery.employeeStationery.add(officePaper);
+                employeeStationery.add(officePaper);
                 break;
             default:
                 System.out.println("Something goes wrong");
@@ -157,8 +158,8 @@ public class AccountingEmployeeStationery {
         for (Map.Entry entrySet : employeeStationeryMap.entrySet()) {
             Employee e = (Employee) entrySet.getKey();
             if (r.equals(Integer.toString(e.getId()))) {
-                EmployeeStationery employeeStationery = (EmployeeStationery) entrySet.getValue();
-                for(Stationery stationery:employeeStationery.employeeStationery){
+                List employeeStationery = (List) entrySet.getValue();
+                for(Object stationery:employeeStationery){
                     System.out.println(stationery.toString());
                 }
             }
