@@ -34,4 +34,14 @@ public class Marker extends Stationery {
     public void setCategory(StationeryCategory category) {
         this.category = category;
     }
+
+    @Override
+    public String toString() {
+        return "Marker{" +
+                "color=" + color +
+                ", price=" + price +
+                ", brand='" + brand + '\'' +
+                ", category=" + category +
+                '}';
+    }
 }

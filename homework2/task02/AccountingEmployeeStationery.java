@@ -6,9 +6,17 @@ import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * The general class for creating and managing of accounting employee stationery.
+ */
 public class AccountingEmployeeStationery {
     TreeMap<Employee, EmployeeStationery> employeeStationeryMap = new TreeMap<Employee, EmployeeStationery>();
 
+    /**
+     * Method of creating and managing of accounting employee stationery
+     *
+     * @throws IOException
+     */
     public void createAccounting() throws IOException {
         if (employeeStationeryMap.isEmpty()) {
             Employee newEmployee = new Employee();
@@ -37,7 +45,7 @@ public class AccountingEmployeeStationery {
                     newEmployeeStationery = this.createStationery(Integer.parseInt(r));
                     break;
                 case "3":
-                    System.out.println("pressed 3");
+                    newEmployeeStationery = this.createStationery(Integer.parseInt(r));
                     break;
                 default:
                     System.out.println("Something goes wrong");
@@ -54,22 +62,29 @@ public class AccountingEmployeeStationery {
             System.out.println(employee + " id " + employee.getId() + "\n");
             EmployeeStationery employeeStationery = (EmployeeStationery) entry.getValue();
             for (Stationery stationery : employeeStationery.employeeStationery) {
-                System.out.println(stationery.brand + " " + stationery.price + " " + stationery.category);
+                System.out.println(stationery.toString());
             }
         }
     }
 
-    public EmployeeStationery createStationery(int i) throws IOException {
+    /**
+     * Creates and adds a new stationery to list of stationery
+     *
+     * @param i
+     * @return
+     * @throws IOException
+     */
+    private EmployeeStationery createStationery(int i) throws IOException {
         EmployeeStationery employeeStationery = new EmployeeStationery();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        int j = 1;
         switch (i) {
             case 1:
                 DocumentHolder documentHolder = new DocumentHolder();
                 System.out.println("Choose the color");
-                int n = 1;
                 for (Color color : Color.values()) {
-                    System.out.println("Enter " + n + " to choose " + color);
-                    n++;
+                    System.out.println("Enter " + j + " to choose " + color);
+                    j++;
                 }
                 documentHolder.setColor(Color.extractColor(Integer.parseInt(reader.readLine())));
                 System.out.println("Enter the price");
@@ -77,10 +92,10 @@ public class AccountingEmployeeStationery {
                 System.out.println("Enter the brand");
                 documentHolder.setBrand(reader.readLine());
                 System.out.println("Choose the category");
-                int m = 1;
+                j = 1;
                 for (StationeryCategory stationeryCategory : StationeryCategory.values()) {
-                    System.out.println("Enter " + m + " to choose " + stationeryCategory);
-                    m++;
+                    System.out.println("Enter " + j + " to choose " + stationeryCategory);
+                    j++;
                 }
                 documentHolder.setCategory(StationeryCategory.extractStationeryCategory(Integer.parseInt(reader.readLine())));
                 employeeStationery.employeeStationery.add(documentHolder);
@@ -88,7 +103,6 @@ public class AccountingEmployeeStationery {
             case 2:
                 Marker marker = new Marker();
                 System.out.println("Choose marker color");
-                int j = 1;
                 for (Color color : Color.values()) {
                     System.out.println("enter " + j + " to choose " + color.toString());
                     j++;
@@ -99,17 +113,38 @@ public class AccountingEmployeeStationery {
                 System.out.println("Enter the brand");
                 marker.setBrand(reader.readLine());
                 System.out.println("Choose category");
-                int k = 1;
+                j = 1;
                 for (StationeryCategory stationeryCategory : StationeryCategory.values()) {
-                    System.out.println("Enter " + k + " to choose " + stationeryCategory.toString());
-                    k++;
+                    System.out.println("Enter " + j + " to choose " + stationeryCategory.toString());
+                    j++;
                 }
                 marker.setCategory(StationeryCategory.extractStationeryCategory(Integer.parseInt(reader.readLine())));
                 employeeStationery.employeeStationery.add(marker);
                 break;
+            case 3:
+                OfficePaper officePaper = new OfficePaper();
+                System.out.println("Enter the amount of sheet");
+                officePaper.setAmountOfSheet(Integer.parseInt(reader.readLine()));
+                System.out.println("Choose the paper format");
+                for (PaperFormat paperFormat : PaperFormat.values()) {
+                    System.out.println("Enter " + j + " to choose " + paperFormat);
+                    j++;
+                }
+                officePaper.setPaperFormat(PaperFormat.extractPaperFormat(Integer.parseInt(reader.readLine())));
+                System.out.println("Enter the price");
+                officePaper.setPrice(Double.parseDouble(reader.readLine()));
+                System.out.println("Enter the brand");
+                officePaper.setBrand(reader.readLine());
+                System.out.println("Choose category");
+                j = 1;
+                for (StationeryCategory stationeryCategory : StationeryCategory.values()) {
+                    System.out.println("Enter " + j + " to choose " + stationeryCategory);
+                    j++;
+                }
+                officePaper.setCategory(StationeryCategory.extractStationeryCategory(Integer.parseInt(reader.readLine())));
+                break;
             default:
                 System.out.println("Something goes wrong");
-
         }
         return employeeStationery;
     }

@@ -34,5 +34,14 @@ public class DocumentHolder extends Stationery {
     public void setCategory(StationeryCategory category) {
         this.category = category;
     }
-    //TODO override toString method
+
+    @Override
+    public String toString() {
+        return "DocumentHolder{" +
+                "color=" + color +
+                ", price=" + price +
+                ", brand='" + brand + '\'' +
+                ", category=" + category +
+                '}';
+    }
 }
