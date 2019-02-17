@@ -8,4 +8,11 @@ import java.util.List;
  */
 public class EmployeeStationery {
     public List<Stationery> employeeStationery = new ArrayList<Stationery>();
+
+    @Override
+    public String toString() {
+        return "EmployeeStationery{" +
+                "employeeStationery=" + employeeStationery +
+                '}';
+    }
 }

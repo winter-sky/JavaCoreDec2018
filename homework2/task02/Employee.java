@@ -4,11 +4,11 @@ import java.util.Objects;
 
 import static homework2.task02.Department.UNDEFINED;
 
-public class Employee implements Comparable<Employee>{
+public class Employee implements Comparable<Employee> {
     private int id;
     private String firstName;
     private String lastName;
-    private Department department=UNDEFINED;
+    private Department department = UNDEFINED;
 
     public int getId() {
         return id;
@@ -66,7 +66,7 @@ public class Employee implements Comparable<Employee>{
 
     @Override
     public String toString() {
-        return lastName +" "+
+        return lastName + " " +
                 firstName +
                 ", " + department;
     }

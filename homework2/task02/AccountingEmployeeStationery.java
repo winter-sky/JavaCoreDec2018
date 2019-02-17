@@ -51,8 +51,6 @@ public class AccountingEmployeeStationery {
                     System.out.println("Something goes wrong");
             }
             employeeStationeryMap.put(newEmployee, newEmployeeStationery);
-        } else {
-            this.showEmployees();
         }
         int i = 1;
         for (Map.Entry entry : employeeStationeryMap.entrySet()) {
@@ -65,6 +63,7 @@ public class AccountingEmployeeStationery {
                 System.out.println(stationery.toString());
             }
         }
+        this.showEmployeeStationery();
     }
 
     /**
@@ -142,6 +141,7 @@ public class AccountingEmployeeStationery {
                     j++;
                 }
                 officePaper.setCategory(StationeryCategory.extractStationeryCategory(Integer.parseInt(reader.readLine())));
+                employeeStationery.employeeStationery.add(officePaper);
                 break;
             default:
                 System.out.println("Something goes wrong");
@@ -157,7 +157,10 @@ public class AccountingEmployeeStationery {
         for (Map.Entry entrySet : employeeStationeryMap.entrySet()) {
             Employee e = (Employee) entrySet.getKey();
             if (r.equals(Integer.toString(e.getId()))) {
-                System.out.println(entrySet.getValue());
+                EmployeeStationery employeeStationery = (EmployeeStationery) entrySet.getValue();
+                for(Stationery stationery:employeeStationery.employeeStationery){
+                    System.out.println(stationery.toString());
+                }
             }
         }
     }
