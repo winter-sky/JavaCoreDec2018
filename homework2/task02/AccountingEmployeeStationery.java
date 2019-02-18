@@ -13,13 +13,15 @@ import java.util.TreeMap;
  */
 public class AccountingEmployeeStationery {
     TreeMap<Employee, List<Stationery>> employeeStationeryMap = new TreeMap<Employee, List<Stationery>>();
+
     /**
      * Method of creating and managing of accounting employee stationery
      *
      * @throws IOException
      */
     public void createAccounting() throws IOException {
-        if (employeeStationeryMap.isEmpty()) {
+        boolean condition = true;
+        while (condition) {
             Employee newEmployee = new Employee();
             System.out.println("Enter first name of employee");
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -32,26 +34,39 @@ public class AccountingEmployeeStationery {
             System.out.println("Enter id of department");
             newEmployee.setDepartment(Department.extract(Integer.parseInt(reader.readLine())));
 
-            System.out.println("Enter 1 to add document holder");
-            System.out.println("Enter 2 to add marker");
-            System.out.println("Enter 3 to add office paper");
-
             List<Stationery> employeeStationery = new ArrayList<Stationery>();
-            String r = reader.readLine();
-            switch (r) {
-                case "1":
-                    employeeStationery = this.createStationery(Integer.parseInt(r));
-                    break;
-                case "2":
-                    employeeStationery = this.createStationery(Integer.parseInt(r));
-                    break;
-                case "3":
-                    employeeStationery = this.createStationery(Integer.parseInt(r));
-                    break;
-                default:
-                    System.out.println("Something goes wrong");
+            boolean flag = true;
+            while (flag) {
+                System.out.println("Enter 1 to add document holder");
+                System.out.println("Enter 2 to add marker");
+                System.out.println("Enter 3 to add office paper");
+
+                String r = reader.readLine();
+                switch (r) {
+                    case "1":
+                        employeeStationery.add(this.createStationery(Integer.parseInt(r)));
+                        break;
+                    case "2":
+                        employeeStationery.add(this.createStationery(Integer.parseInt(r)));
+                        break;
+                    case "3":
+                        employeeStationery.add(this.createStationery(Integer.parseInt(r)));
+                        break;
+                    default:
+                        continue;
+                }
+
+                System.out.println("Enter 1 to add one more stationery to " + newEmployee.getFirstName());
+                if (reader.readLine().equals("1")) {
+                    continue;
+                } else break;
             }
             employeeStationeryMap.put(newEmployee, employeeStationery);
+            System.out.println("Enter 0 to finish");
+            System.out.println("Enter 1 to continue");
+            if (reader.readLine().equals("0")) {
+                condition = false;
+            }
         }
         int i = 1;
         for (Map.Entry entry : employeeStationeryMap.entrySet()) {
@@ -64,7 +79,6 @@ public class AccountingEmployeeStationery {
                 System.out.println(stationery.toString());
             }
         }
-        this.showEmployeeStationery();
     }
 
     /**
@@ -74,8 +88,8 @@ public class AccountingEmployeeStationery {
      * @return
      * @throws IOException
      */
-    private List createStationery(int i) throws IOException {
-        List<Stationery> employeeStationery = new ArrayList<Stationery>();
+    private Stationery createStationery(int i) throws IOException {
+        Stationery employeeStationery = new Stationery();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         int j = 1;
         switch (i) {
@@ -98,7 +112,7 @@ public class AccountingEmployeeStationery {
                     j++;
                 }
                 documentHolder.setCategory(StationeryCategory.extractStationeryCategory(Integer.parseInt(reader.readLine())));
-                employeeStationery.add(documentHolder);
+                employeeStationery = documentHolder;
                 break;
             case 2:
                 Marker marker = new Marker();
@@ -119,7 +133,7 @@ public class AccountingEmployeeStationery {
                     j++;
                 }
                 marker.setCategory(StationeryCategory.extractStationeryCategory(Integer.parseInt(reader.readLine())));
-                employeeStationery.add(marker);
+                employeeStationery = marker;
                 break;
             case 3:
                 OfficePaper officePaper = new OfficePaper();
@@ -142,7 +156,7 @@ public class AccountingEmployeeStationery {
                     j++;
                 }
                 officePaper.setCategory(StationeryCategory.extractStationeryCategory(Integer.parseInt(reader.readLine())));
-                employeeStationery.add(officePaper);
+                employeeStationery = officePaper;
                 break;
             default:
                 System.out.println("Something goes wrong");
@@ -159,7 +173,7 @@ public class AccountingEmployeeStationery {
             Employee e = (Employee) entrySet.getKey();
             if (r.equals(Integer.toString(e.getId()))) {
                 List employeeStationery = (List) entrySet.getValue();
-                for(Object stationery:employeeStationery){
+                for (Object stationery : employeeStationery) {
                     System.out.println(stationery.toString());
                 }
             }
