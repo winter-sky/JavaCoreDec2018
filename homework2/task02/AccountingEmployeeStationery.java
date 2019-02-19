@@ -35,37 +35,35 @@ public class AccountingEmployeeStationery {
             newEmployee.setDepartment(Department.extract(Integer.parseInt(reader.readLine())));
 
             List<Stationery> employeeStationery = new ArrayList<Stationery>();
+            //TODO add an ability not to add stationery
+            // System.out.println("Enter 0 to continue without adding stationery");
             boolean flag = true;
             while (flag) {
-                System.out.println("Enter 1 to add document holder");
-                System.out.println("Enter 2 to add marker");
-                System.out.println("Enter 3 to add office paper");
-
-                String r = reader.readLine();
-                switch (r) {
-                    case "1":
-                        employeeStationery.add(this.createStationery(Integer.parseInt(r)));
-                        break;
-                    case "2":
-                        employeeStationery.add(this.createStationery(Integer.parseInt(r)));
-                        break;
-                    case "3":
-                        employeeStationery.add(this.createStationery(Integer.parseInt(r)));
-                        break;
-                    default:
-                        continue;
-                }
-
+                this.addStationery(employeeStationery, reader);
                 System.out.println("Enter 1 to add one more stationery to " + newEmployee.getFirstName());
                 if (reader.readLine().equals("1")) {
                     continue;
                 } else break;
             }
             employeeStationeryMap.put(newEmployee, employeeStationery);
+            int i = 1;
+            for (Map.Entry entry : employeeStationeryMap.entrySet()) {
+                Employee employee = (Employee) entry.getKey();
+                employee.setId(i);
+                i++;
+            }
             System.out.println("Enter 0 to finish");
-            System.out.println("Enter 1 to continue");
-            if (reader.readLine().equals("0")) {
-                condition = false;
+            System.out.println("Enter 1 to add one more employee");
+            System.out.println("Enter 2 to show all employee and their stationery");
+            int r = Integer.parseInt(reader.readLine());
+            if (r == 0) {
+                break;
+            }
+            if (r == 1) {
+                continue;
+            }
+            if (r == 2) {
+                this.showEmployeeStationery();
             }
         }
         int i = 1;
@@ -78,6 +76,27 @@ public class AccountingEmployeeStationery {
             for (Object stationery : employeeStationery) {
                 System.out.println(stationery.toString());
             }
+        }
+    }
+
+    private void addStationery(List employeeStationery, BufferedReader reader) throws IOException {
+        System.out.println("Enter 1 to add document holder");
+        System.out.println("Enter 2 to add marker");
+        System.out.println("Enter 3 to add office paper");
+
+        String r = reader.readLine();
+        switch (r) {
+            case "1":
+                employeeStationery.add(this.createStationery(Integer.parseInt(r)));
+                break;
+            case "2":
+                employeeStationery.add(this.createStationery(Integer.parseInt(r)));
+                break;
+            case "3":
+                employeeStationery.add(this.createStationery(Integer.parseInt(r)));
+                break;
+            default:
+                System.out.println("Something goes wrong");
         }
     }
 
@@ -164,23 +183,42 @@ public class AccountingEmployeeStationery {
         return employeeStationery;
     }
 
-    public void showEmployeeStationery() throws IOException {
+    private void showEmployeeStationery() throws IOException {
         this.showEmployees();
         System.out.println("Enter employee's id");
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String r = reader.readLine();
-        for (Map.Entry entrySet : employeeStationeryMap.entrySet()) {
-            Employee e = (Employee) entrySet.getKey();
-            if (r.equals(Integer.toString(e.getId()))) {
-                List employeeStationery = (List) entrySet.getValue();
-                for (Object stationery : employeeStationery) {
-                    System.out.println(stationery.toString());
+        System.out.println("Enter 0 to show stationery");
+        System.out.println("Enter 1 to add new stationery");
+        String s = reader.readLine();
+        switch (s) {
+            case "0":
+                for (Map.Entry entrySet : employeeStationeryMap.entrySet()) {
+                    Employee e = (Employee) entrySet.getKey();
+                    if (r.equals(Integer.toString(e.getId()))) {
+                        List employeeStationery = (List) entrySet.getValue();
+                        for (Object stationery : employeeStationery) {
+                            System.out.println(stationery.toString());
+                        }
+                    }
                 }
-            }
+                break;
+            case "1":
+                for (Map.Entry entrySet : employeeStationeryMap.entrySet()) {
+                    Employee e = (Employee) entrySet.getKey();
+                    if (r.equals(Integer.toString(e.getId()))) {
+                        List employeeStationery = (List) entrySet.getValue();
+                        this.addStationery(employeeStationery, reader);
+                    }
+                }
+                break;
+            default:
+                System.out.println("Everything was broken");
         }
+
     }
 
-    public void showEmployees() {
+    private void showEmployees() {
         int i = 1;
         for (Map.Entry entry : employeeStationeryMap.entrySet()) {
             System.out.println(i + ") " + entry.getKey().toString() + "\n");
