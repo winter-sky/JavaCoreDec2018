@@ -22,36 +22,8 @@ public class AccountingEmployeeStationery {
     public void createAccounting() throws IOException {
         boolean condition = true;
         while (condition) {
-            Employee newEmployee = new Employee();
-            System.out.println("Enter first name of employee");
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            newEmployee.setFirstName(reader.readLine());
-            System.out.println("Enter the last name of employee");
-            newEmployee.setLastName(reader.readLine());
-            for (Department d : Department.values()) {
-                System.out.println(d.ordinal() + 1 + ") " + d);
-            }
-            System.out.println("Enter id of department");
-            newEmployee.setDepartment(Department.extract(Integer.parseInt(reader.readLine())));
-
-            List<Stationery> employeeStationery = new ArrayList<Stationery>();
-            //TODO add an ability not to add stationery
-            // System.out.println("Enter 0 to continue without adding stationery");
-            boolean flag = true;
-            while (flag) {
-                this.addStationery(employeeStationery, reader);
-                System.out.println("Enter 1 to add one more stationery to " + newEmployee.getFirstName());
-                if (reader.readLine().equals("1")) {
-                    continue;
-                } else break;
-            }
-            employeeStationeryMap.put(newEmployee, employeeStationery);
-            int i = 1;
-            for (Map.Entry entry : employeeStationeryMap.entrySet()) {
-                Employee employee = (Employee) entry.getKey();
-                employee.setId(i);
-                i++;
-            }
+            this.addEmployee(reader);
             System.out.println("Enter 0 to finish");
             System.out.println("Enter 1 to add one more employee");
             System.out.println("Enter 2 to show all employee and their stationery");
@@ -78,7 +50,61 @@ public class AccountingEmployeeStationery {
             }
         }
     }
+    /**
+     * Adds new entry with employee and stationery
+     *
+     * @param reader
+     * @return
+     * @throws IOException
+     */
+    private void addEmployee(BufferedReader reader) throws IOException {
+        Employee newEmployee = new Employee();
+        System.out.println("Enter first name of employee");
+        newEmployee.setFirstName(reader.readLine());
+        System.out.println("Enter the last name of employee");
+        newEmployee.setLastName(reader.readLine());
+        for (Department d : Department.values()) {
+            System.out.println(d.ordinal() + 1 + ") " + d);
+        }
+        System.out.println("Enter id of department");
+        newEmployee.setDepartment(Department.extract(Integer.parseInt(reader.readLine())));
+        List<Stationery> employeeStationery = new ArrayList<Stationery>();
+        employeeStationeryMap.put(newEmployee, employeeStationery);
+        int i = 1;
+        for (Map.Entry entry : employeeStationeryMap.entrySet()) {
+            Employee employee = (Employee) entry.getKey();
+            employee.setId(i);
+            i++;
+        }
+        System.out.println("Enter 1 to add stationery to " + newEmployee.getFirstName());
+        System.out.println("Enter 2 to show list of all employees");
+        String s = reader.readLine();
+        switch (s) {
+            case "1":
+                boolean flag = true;
+                while (flag) {
+                    this.addStationery(employeeStationery, reader);
+                    System.out.println("Enter 1 to add one more stationery to " + newEmployee.getFirstName());
+                    if (reader.readLine().equals("1")) {
+                        continue;
+                    } else break;
+                }
+                break;
+            case "2":
+                this.showEmployeeStationery();
+                break;
+            default:
+                System.out.println("Everything was broken");
+        }
+    }
 
+    /**
+     * Method allows to add new stationery to employee
+     *
+     * @param employeeStationery
+     * @param reader
+     * @throws IOException
+     */
     private void addStationery(List employeeStationery, BufferedReader reader) throws IOException {
         System.out.println("Enter 1 to add document holder");
         System.out.println("Enter 2 to add marker");
@@ -183,6 +209,11 @@ public class AccountingEmployeeStationery {
         return employeeStationery;
     }
 
+    /**
+     * Shows list of employees and allows to manage employee stationery
+     *
+     * @throws IOException
+     */
     private void showEmployeeStationery() throws IOException {
         this.showEmployees();
         System.out.println("Enter employee's id");
@@ -215,7 +246,6 @@ public class AccountingEmployeeStationery {
             default:
                 System.out.println("Everything was broken");
         }
-
     }
 
     private void showEmployees() {
