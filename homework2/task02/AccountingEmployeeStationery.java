@@ -216,13 +216,16 @@ public class AccountingEmployeeStationery {
         String s = reader.readLine();
         switch (s) {
             case "1":
+                double totalCost = 0;
                 for (Map.Entry entrySet : employeeStationeryMap.entrySet()) {
                     Employee e = (Employee) entrySet.getKey();
                     if (r.equals(Integer.toString(e.getId()))) {
-                        List employeeStationery = (List) entrySet.getValue();
-                        for (Object stationery : employeeStationery) {
+                        List<Stationery> employeeStationery = (List) entrySet.getValue();
+                        for (Stationery stationery : employeeStationery) {
                             System.out.println(stationery.toString());
+                            totalCost += stationery.getPrice();
                         }
+                        System.out.println("Total price of all stationery " + totalCost);
                     }
                 }
                 break;
@@ -237,6 +240,19 @@ public class AccountingEmployeeStationery {
                 break;
             default:
                 System.out.println("Everything was broken");
+        }
+    }
+
+    private void totalCost(BufferedReader r) {
+        double totalPrice = 0;
+        for (Map.Entry entrySet : employeeStationeryMap.entrySet()) {
+            Employee e = (Employee) entrySet.getKey();
+            if (r.equals(Integer.toString(e.getId()))) {
+                List<Stationery> employeeStationery = (List) entrySet.getValue();
+                for (Stationery stationery : employeeStationery) {
+                    totalPrice += stationery.getPrice();
+                }
+            }
         }
     }
 
