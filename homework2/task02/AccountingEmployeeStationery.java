@@ -3,10 +3,7 @@ package homework2.task02;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * The general class for creating and managing of accounting employee stationery.
@@ -29,7 +26,7 @@ public class AccountingEmployeeStationery {
             String s = reader.readLine();
             switch (s) {
                 case "1":
-                    this.showEmployeeStationery();
+                    this.employeeStationeryManaging();
                     break;
                 case "2":
                     this.addEmployee(reader);
@@ -68,26 +65,6 @@ public class AccountingEmployeeStationery {
             Employee employee = (Employee) entry.getKey();
             employee.setId(i);
             i++;
-        }
-        System.out.println("Enter 1 to add stationery to " + newEmployee.getFirstName());
-        System.out.println("Enter 2 to show list of all employees");
-        String s = reader.readLine();
-        switch (s) {
-            case "1":
-                boolean flag = true;
-                while (flag) {
-                    this.addStationery(employeeStationery, reader);
-                    System.out.println("Enter 1 to add one more stationery to " + newEmployee.getFirstName());
-                    if (reader.readLine().equals("1")) {
-                        continue;
-                    } else break;
-                }
-                break;
-            case "2":
-                this.showEmployeeStationery();
-                break;
-            default:
-                System.out.println("Everything was broken");
         }
     }
 
@@ -206,67 +183,81 @@ public class AccountingEmployeeStationery {
      *
      * @throws IOException
      */
-    private void showEmployeeStationery() throws IOException {
-        this.showEmployees();
+    private void employeeStationeryManaging() throws IOException {
+        int i = 1;
+        if (!(employeeStationeryMap.isEmpty())) {
+            for (Map.Entry entry : employeeStationeryMap.entrySet()) {
+                System.out.println(i + ") " + entry.getKey().toString() + "\n");
+                i++;
+            }
+        } else {
+            System.out.println("The list of employees is empty. Add at least one employee");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            this.addEmployee(reader);
+            for (Map.Entry entry : employeeStationeryMap.entrySet()) {
+                System.out.println(i + ") " + entry.getKey().toString() + "\n");
+                i++;
+            }
+        }
         System.out.println("Enter employee's id to show stationery or add new stationery");
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String r = reader.readLine();
-        System.out.println("Enter 1 to show stationery");
-        System.out.println("Enter 2 to add new stationery");
-        String s = reader.readLine();
-        switch (s) {
-            case "1":
-                double totalCost = 0;
-                for (Map.Entry entrySet : employeeStationeryMap.entrySet()) {
-                    Employee e = (Employee) entrySet.getKey();
-                    if (r.equals(Integer.toString(e.getId()))) {
-                        List<Stationery> employeeStationery = (List) entrySet.getValue();
-                        for (Stationery stationery : employeeStationery) {
-                            System.out.println(stationery.toString());
-                            totalCost += stationery.getPrice();
-                        }
-                        System.out.println("Total price of all stationery " + totalCost);
-                    }
-                }
-                break;
-            case "2":
-                for (Map.Entry entrySet : employeeStationeryMap.entrySet()) {
-                    Employee e = (Employee) entrySet.getKey();
-                    if (r.equals(Integer.toString(e.getId()))) {
-                        List employeeStationery = (List) entrySet.getValue();
-                        this.addStationery(employeeStationery, reader);
-                    }
-                }
-                break;
-            default:
-                System.out.println("Everything was broken");
-        }
-    }
-
-    private void totalCost(BufferedReader r) {
-        double totalPrice = 0;
+        boolean bool = false;
         for (Map.Entry entrySet : employeeStationeryMap.entrySet()) {
             Employee e = (Employee) entrySet.getKey();
             if (r.equals(Integer.toString(e.getId()))) {
-                List<Stationery> employeeStationery = (List) entrySet.getValue();
-                for (Stationery stationery : employeeStationery) {
-                    totalPrice += stationery.getPrice();
-                }
+                bool=true;
+                break;
             }
+        }
+        if(bool){
+            System.out.println("Enter 1 to show stationery");
+            System.out.println("Enter 2 to add new stationery");
+            String s = reader.readLine();
+            switch (s) {
+                case "1":
+                    this.showStationery(r);
+                    break;
+                case "2":
+                    for (Map.Entry entrySet : employeeStationeryMap.entrySet()) {
+                        Employee e = (Employee) entrySet.getKey();
+                        if (r.equals(Integer.toString(e.getId()))) {
+                            this.addStationery((List) entrySet.getValue(), reader);
+                        }
+                    }
+                    break;
+                default:
+                    System.out.println("Everything was broken");
+            }
+        } else {
+            System.out.println("There is no employee with such id");
         }
     }
 
     /**
-     * Shows list of all employees
+     * Shows the stationery of the choosen employee
+     * @param r
+     * @throws IOException
      */
-    private void showEmployees() {
-        int i = 1;
-        for (Map.Entry entry : employeeStationeryMap.entrySet()) {
-            System.out.println(i + ") " + entry.getKey().toString() + "\n");
-            i++;
+    private void showStationery(String r) throws IOException {
+        double totalCost = 0;
+        for (Map.Entry entrySet : employeeStationeryMap.entrySet()) {
+            Employee e = (Employee) entrySet.getKey();
+            if (r.equals(Integer.toString(e.getId()))) {
+                List<Stationery> employeeStationery = (List) entrySet.getValue();
+                if (!employeeStationery.isEmpty()) {
+                    for (Stationery stationery : employeeStationery) {
+                        System.out.println(stationery.toString());
+                        totalCost += stationery.getPrice();
+                    }
+                    System.out.println("Total price of all stationery " + totalCost);
+                } else {
+                    System.out.println("Employee has no stationery. Add at least one stationery.");
+                    this.addStationery(employeeStationery, new BufferedReader(new InputStreamReader(System.in)));
+                }
+            }
         }
     }
-
     public static void main(String[] args) {
         AccountingEmployeeStationery accountingEmployeeStationery = new AccountingEmployeeStationery();
         try {
